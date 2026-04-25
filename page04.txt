@@ -1,0 +1,50 @@
+open - 열다
+paper - 종이, 신문
+cold - 추운, 감기
+laugh - 웃다, 웃음
+plane - 비행기
+early - 일찍, 이른
+late - 늦은, 늦게
+difficult - 어려운, 곤란한
+everyone - 모두 다
+happen - 일어나다, 발생하다
+finish - 끝내다
+teach - 가르치다
+mountain - 산
+sound - 소리, ~로 생각되다
+change - 변화하다, 잔돈
+suddenly - 갑자기
+wonderful - 놀라운, 훌륭한
+birthday - 생일
+easy - 쉬운
+important - 중요한, 중대한
+short - 짧은, 키가 작은
+break - 부수다, 어기다
+already - 벌써, 이미
+pound - 파운드
+quick - 빠른, 빨리
+club - 클럽, 곤봉
+close - 닫다, 가까운
+since - ~이래
+print - 인쇄하다, 인쇄물
+building - 건물
+east - 동쪽의
+o'clock - ~시
+dark - 어두운
+bicycle - 자전거
+college - 단과 대학
+heart - 심장, 중심
+lady - 숙녀, 귀부인
+radio - 라디오
+indoor - 실내의
+lake - 호수
+rain - 비, 비가 내리다
+drive - 운전하다
+tennis - 테니스, 정구
+under - ~아래에
+shirt - 와이셔츠
+die - 죽다
+gold - 금, 금화
+ship - 배
+warm - 따뜻한
+reader - 독자, 독서가

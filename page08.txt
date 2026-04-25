@@ -1,0 +1,50 @@
+clock - 시계
+team - 팀, 조
+hurt - 상처를 입히다
+yard - 마당
+spell - 철자하다
+speaker - 말하는 사람, 연설자
+lawyer - 변호사, 법률가
+orange - 오렌지, 오렌지색
+throw - 던지다
+meter - 미터
+meal - 식사
+north - 북쪽, 북쪽의
+god - 신, 하나님
+wind - 바람
+yellow - 노란색의
+concert - 음악회, 연주회
+center - 중앙, 중심
+heavy - 무거운, 심한
+note - 기록, 적어 두다
+weak - 약한
+dry - 마른, 말리다
+supper - 저녁밥
+noon - 정오, 한낮
+anyone - 누군가, 누구라도
+rude - 무례한, 버릇없는
+normal - 정상의, 보통의
+dining room - 식당
+south - 남쪽, 남쪽의
+above - ~위에
+China - 중국
+group - 집단, 무리
+guitar - 기타
+most - 가장 많은, 대부분
+join - 결합하다, 참가하다
+bridge - 다리
+cent - 센트
+ill - 병든, 나쁜
+size - 크기, 치수
+bath - 목욕
+pond - 연못
+pair - 한 쌍, 한 벌
+probably - 아마
+mad - 미친, 열광적인
+tonight - 오늘 밤
+prize - 상, 상품
+instead - 그 대신에
+justice - 정의
+mercy - 자비
+discuss - 토론하다, 논의하다
+rice - 쌀, 밥

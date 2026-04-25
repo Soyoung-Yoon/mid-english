@@ -1,0 +1,63 @@
+empty 비어 있는, 빈  
+full 가득 찬  
+minute 분 (시간의 단위)  
+excited 신나는, 흥분되는  
+fair 박람회; 공평한  
+hear 듣다 (heard-heard)  
+learn 배우다; 알다  
+lose 잃어버리다; 지다 (lost-lost)  
+present 선물 (= gift); 현재  
+sick 아픈, 병든 (= ill)  
+ticket 표, 티켓  
+upset 속상한, 마음이 상한  
+agree 동의하다 (↔ disagree)  
+fault 잘못  
+quit 그만두다 (quit-quit)  
+support 지지, 응원  
+attitude 태도  
+contest 대회, 시험  
+enter 참가하다, 출전하다; 들어가다  
+finally 마침내 (= lastly)  
+finish 끝내다 (↔ start)  
+guess 추측하다  
+hold 열다, 개최하다 (held-held)  
+hopeless 가망 없는 (↔ hopeful)  
+result 결과  
+terrible 형편없는, 끔찍한
+careful 조심스러운 (↔ careless)  
+famous 유명한  
+seat 자리, 좌석  
+throw 던지다 (threw-thrown)  
+message 교훈, 메시지  
+find 찾다 (found-found)  
+however 그러나, 하지만  
+hungry 배고픈 (↔ full)  
+nervous 긴장한, 초조한  
+positive 긍정적인  
+still 아직, 여전히 
+work 작동하다; 일하다  
+worried 걱정하는  
+cheer up 힘내다, 격려하다  
+Congratulations! 축하해!  
+do one’s best 최선을 다하다  
+green energy 친환경 에너지  
+win a prize 상을 타다  
+work on ~에 노력하다  
+text 문자를 보내다  
+worry 걱정하다  
+because of ~ 때문에  
+be proud of ~을 자랑스러워하다  
+waste 낭비하다  
+Are you kidding? 농담이야?  
+be almost there 거의 다 오다  
+be interested in ~에 관심이 있다  
+by the way 그런데  
+get anywhere 진전을 보이다 (부정문)  
+Good job! 잘했어!  
+make a mistake 실수하다  
+take a picture 사진을 찍다  
+turn off ~을 끄다 (↔ turn on)  
+wash the dishes 설거지하다  
+sign 표지판  
+speech 연설  
+have a great time 좋은 시간을 보내다

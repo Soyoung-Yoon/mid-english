@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>중학 영어 학습 포털</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap');
+
+  :root {
+    --c-word: #3d405b;
+    --c-sent: #3d7a6a;
+    --c-voca: #5a7a3a;
+    --c-gram: #6b4c8a;
+    --c-conv: #3a6a9e;
+    --c-quiz: #c05a38;
+    --gray-50:  #f8fafc;
+    --gray-100: #f1f5f9;
+    --gray-200: #e2e8f0;
+    --gray-400: #94a3b8;
+    --gray-500: #64748b;
+    --gray-600: #475569;
+    --gray-700: #334155;
+    --gray-800: #1e293b;
+    --navy: #1e1b3a;
+    --white: #ffffff;
+    --radius: 16px;
+    --radius-sm: 10px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+    --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: #f0eff8;
+    color: var(--gray-800);
+    min-height: 100vh;
+  }
+
+  /* ══════ HERO ══════ */
+  .hero {
+    background: linear-gradient(135deg, #120f28 0%, #1e1b3a 50%, #2d1b5e 100%);
+    background-size: 300% 300%;
+    animation: heroShift 10s ease infinite;
+    padding: 48px 32px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  @keyframes heroShift {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,.07) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 700px; height: 700px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(224,122,95,.12) 0%, transparent 70%);
+    top: -250px; right: -150px;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.18);
+    color: #f9a875; font-size: 12px; font-weight: 700; letter-spacing: 1px;
+    padding: 5px 16px; border-radius: 20px; margin-bottom: 22px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    color: white; font-size: clamp(24px, 4vw, 38px);
+    font-weight: 900; line-height: 1.3; margin-bottom: 8px; letter-spacing: -.5px;
+  }
+  .hero h1 em {
+    background: linear-gradient(90deg, #f9a875, #e07a5f);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    font-style: normal;
+  }
+  .hero-sub { color: rgba(255,255,255,.5); font-size: 15px; }
+
+  /* ══════ CONTAINER ══════ */
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ══════ JOURNEY ══════ */
+  .journey-wrap {
+    background: white; border-radius: var(--radius);
+    padding: 24px 28px; margin: -36px auto 28px;
+    box-shadow: var(--shadow-lg); border: 1px solid var(--gray-200);
+    position: relative; z-index: 10;
+  }
+  .journey-label {
+    font-size: 11px; font-weight: 700; color: var(--gray-400);
+    letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px;
+  }
+  .journey { display: flex; align-items: stretch; gap: 0; }
+
+  .j-phase {
+    flex: 1; padding: 14px 16px; border-radius: var(--radius-sm);
+    border: 2px solid var(--gray-200); cursor: pointer;
+    transition: border-color .2s, box-shadow .2s;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .j-phase:hover { box-shadow: var(--shadow); }
+
+  .j-phase-head { display: flex; align-items: center; gap: 10px; }
+  .j-icon {
+    width: 36px; height: 36px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .j-phase-title { font-size: 14px; font-weight: 800; color: var(--navy); }
+  .j-phase-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+  .j-phase-sub { font-size: 11px; color: var(--gray-500); }
+  .j-mini-bar {
+    width: 100%; height: 4px; background: var(--gray-200); border-radius: 2px; overflow: hidden;
+  }
+  .j-mini-fill { height: 100%; border-radius: 2px; transition: width .5s; }
+  .j-total {
+    font-size: 12px; font-weight: 700;
+    padding-top: 8px; border-top: 1px solid var(--gray-200);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .j-pct { font-size: 16px; font-weight: 900; font-family: monospace; }
+
+  .j-arrow {
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 10px; color: var(--gray-300); font-size: 22px; flex-shrink: 0;
+  }
+
+  /* ══════ SECTION GRID ══════ */
+  .section-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 22px; align-items: start;
+  }
+  @media (max-width: 780px) {
+    .section-grid { grid-template-columns: 1fr; }
+    .journey { flex-direction: column; }
+    .j-arrow { padding: 10px 0; transform: rotate(90deg); }
+    .hero { padding: 48px 20px 72px; }
+    .journey-wrap { margin: -28px 0 22px; padding: 18px; }
+  }
+
+  /* ══════ SECTION CARD ══════ */
+  .section-card {
+    background: white; border-radius: var(--radius);
+    overflow: hidden; box-shadow: var(--shadow);
+    border: 1px solid var(--gray-200);
+    transition: transform .25s, box-shadow .25s;
+  }
+  .section-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+
+  .card-top { height: 6px; }
+  .card-header {
+    padding: 20px 24px 14px; border-bottom: 1px solid var(--gray-100);
+    display: flex; align-items: flex-start; gap: 14px;
+  }
+  .card-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; flex-shrink: 0;
+  }
+  .card-info { flex: 1; }
+  .card-section-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; margin-bottom: 3px; }
+  .card-title { font-size: 18px; font-weight: 900; color: var(--navy); margin-bottom: 3px; }
+  .card-subtitle { font-size: 12px; color: var(--gray-500); }
+
+  .card-progress-area {
+    padding: 12px 24px 14px; border-bottom: 1px solid var(--gray-100);
+  }
+  .progress-row {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 7px; font-size: 12px;
+  }
+  .prog-bar { height: 7px; background: var(--gray-100); border-radius: 4px; overflow: hidden; }
+  .prog-fill { height: 100%; border-radius: 4px; transition: width .55s cubic-bezier(.4,0,.2,1); }
+
+  .card-body { padding: 16px 24px; }
+
+  /* Sub groups */
+  .sub-groups { display: flex; flex-direction: column; gap: 10px; }
+  .sub-group { border: 1px solid var(--gray-200); border-radius: var(--radius-sm); overflow: hidden; }
+  .sub-group-header {
+    padding: 11px 14px; display: flex; align-items: center;
+    justify-content: space-between; cursor: pointer; user-select: none; transition: filter .15s;
+  }
+  .sub-group-header:hover { filter: brightness(.96); }
+  .sub-group-left { flex: 1; }
+  .sub-group-title { font-size: 13px; font-weight: 700; }
+  .sub-group-desc { font-size: 11px; opacity: .7; margin-top: 2px; }
+  .sub-group-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .sub-group-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(255,255,255,.4); }
+  .sub-group-toggle { font-size: 13px; opacity: .5; transition: transform .2s; }
+  .sub-group-body { display: none; padding: 14px; border-top: 1px solid rgba(0,0,0,.06); }
+  .sub-group-body.open { display: block; }
+
+  /* Dot grid */
+  .dot-grid { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 10px; }
+  .prob-dot {
+    width: 30px; height: 30px; border-radius: 7px;
+    background: var(--gray-100); border: 1px solid var(--gray-200);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--gray-400);
+    cursor: pointer; transition: all .18s; user-select: none; text-decoration: none;
+  }
+  .prob-dot:hover:not(.disabled) { background: var(--gray-200); transform: scale(1.12); }
+  .prob-dot.done { background: var(--dot-color); border-color: var(--dot-color); color: white; }
+  .prob-dot.disabled { cursor: not-allowed; opacity: .38; }
+
+  /* Coming soon */
+  .coming-soon {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 32px 20px; text-align: center; color: var(--gray-400); gap: 8px;
+  }
+  .coming-soon .cs-icon { font-size: 36px; }
+  .coming-soon .cs-text { font-size: 14px; font-weight: 700; color: var(--gray-500); }
+  .coming-soon .cs-sub { font-size: 12px; }
+
+  /* ══════ FOOTER ══════ */
+  .site-footer {
+    text-align: center; padding: 22px;
+    font-size: 12px; color: var(--gray-400);
+    border-top: 1px solid var(--gray-200); background: white;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { background: var(--gray-100); }
+  ::-webkit-scrollbar-thumb { background: #c5c8dc; border-radius: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ════ HERO ════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">📖 eduatoz.kr · 중학 영어</div>
+    <h1>단어부터 문제풀이까지<br><em>단계별 완전정복</em> 로드맵</h1>
+    <p class="hero-sub">단어 · 문장 · 문법 · 대화 · 문제풀이를 체계적으로 학습</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- ════ JOURNEY ════ -->
+  <div class="journey-wrap">
+    <div class="journey-label">학습 로드맵</div>
+    <div class="journey" id="journeyMap"></div>
+  </div>
+
+  <!-- ════ SECTION CARDS ════ -->
+  <div class="section-grid" id="sectionGrid"></div>
+
+</div>
+
+<footer class="site-footer">
+  © eduatoz.kr · 중학 영어 학습 포털
+</footer>
+
+<script>
+const SECTIONS = [
+  {
+    id: 'word',
+    colorA: '#3d405b', colorB: '#5a5e82',
+    light: '#eef0f8', mid: '#c5c8dc', text: '#3d405b',
+    icon: '📚',
+    label: '단어',
+    title: '단원별 단어장',
+    subtitle: '총 24단원 · 단원당 50단어',
+    desc: '플래시카드 · 영한/한영 퀴즈 · 오답노트',
+    subgroups: [
+      {
+        id: 'words',
+        label: '📖 단원별 단어 학습',
+        colorA: '#3d405b', colorB: '#5a5e82',
+        light: '#eef0f8', mid: '#c5c8dc', text: '#3d405b',
+        desc: '플래시카드 · 영한/한영 퀴즈 · 오답노트',
+        items: [
+          { fileUrl: 'word_page01.html', fileReady: true },
+          { fileUrl: 'word_page02.html', fileReady: true },
+          { fileUrl: 'word_page03.html', fileReady: true },
+          { fileUrl: 'word_page04.html', fileReady: true },
+          { fileUrl: 'word_page05.html', fileReady: true },
+          { fileUrl: 'word_page06.html', fileReady: true },
+          { fileUrl: 'word_page07.html', fileReady: true },
+          { fileUrl: 'word_page08.html', fileReady: true },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'sent',
+    colorA: '#3d7a6a', colorB: '#2a6b5a',
+    light: '#edf7f5', mid: '#b3ddd7', text: '#2a5a4a',
+    icon: '📝',
+    label: '문장',
+    title: '핵심 문장 패턴',
+    subtitle: '문장 패턴 · 영작 연습',
+    desc: '핵심 문장 패턴과 영작 연습',
+    coming: true,
+    subgroups: []
+  },
+  {
+    id: 'voca',
+    colorA: '#5a7a3a', colorB: '#4a6a2a',
+    light: '#f2f5ec', mid: '#c8d8b0', text: '#4a6a2a',
+    icon: '📗',
+    label: '핵심 어휘',
+    title: '교과서 핵심 어휘',
+    subtitle: '총 24단원 · 단원별 핵심 어휘',
+    desc: '플래시카드 · 발음 듣기 · 영한/한영 퀴즈',
+    subgroups: [
+      {
+        id: 'voca_units',
+        label: '📗 단원별 핵심 어휘 학습',
+        colorA: '#5a7a3a', colorB: '#4a6a2a',
+        light: '#f2f5ec', mid: '#c8d8b0', text: '#4a6a2a',
+        desc: '플래시카드 · 발음 듣기 · 영한/한영 퀴즈',
+        items: [
+          { fileUrl: 'voca_page01.html', fileReady: true },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+        ]
+      }
+    ]
+  },
+  {
+    id: 'conv',
+    colorA: '#3a6a9e', colorB: '#2a5a8e',
+    light: '#eef4fb', mid: '#b3cde8', text: '#2a5a8e',
+    icon: '💬',
+    label: '대화',
+    title: '단원별 대화',
+    subtitle: '핵심 표현 · 대화 패턴',
+    desc: '단원별 핵심 대화문 학습',
+    coming: true,
+    subgroups: []
+  },
+  {
+    id: 'gram',
+    colorA: '#6b4c8a', colorB: '#5a3a7a',
+    light: '#f5f0fb', mid: '#d5c5eb', text: '#5a3a7a',
+    icon: '📖',
+    label: '문법',
+    title: '문법 학습',
+    subtitle: 'be동사 · 일반동사 · 시제 · 문형',
+    desc: '핵심 문법 정리와 퀴즈',
+    coming: true,
+    subgroups: []
+  },
+  {
+    id: 'quiz',
+    colorA: '#c05a38', colorB: '#a04828',
+    light: '#fdf2ee', mid: '#f0c4b3', text: '#a04828',
+    icon: '📋',
+    label: '문제풀이',
+    title: '학교 시험 100점 맞기',
+    subtitle: '총 9회 · 즉시 채점 · 해설 제공',
+    desc: '학교 시험 유형 완벽 대비 문제풀이',
+    subgroups: [
+      {
+        id: 'school_test',
+        label: '📋 학교 시험 100점 맞기',
+        colorA: '#c05a38', colorB: '#a04828',
+        light: '#fdf2ee', mid: '#f0c4b3', text: '#a04828',
+        desc: '즉시 채점 · 상세 해설 · TTS 지문 듣기',
+        itemLabel: '회',
+        items: [
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: 'school_test03.html', fileReady: true },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+        ]
+      }
+    ]
+  }
+];
+
+function getSectionProgress(s) {
+  if (!s.subgroups || s.subgroups.length === 0) return { done: 0, total: 0 };
+  let done = 0, total = 0;
+  s.subgroups.forEach(sg => {
+    total += sg.items.length;
+    done  += sg.items.filter(it => it.fileReady).length;
+  });
+  return { done, total };
+}
+
+function renderJourney() {
+  const el = document.getElementById('journeyMap');
+  el.innerHTML = SECTIONS.map((s, i) => {
+    const { done, total } = getSectionProgress(s);
+    const pct = total > 0 ? Math.round(done / total * 100) : 0;
+    const active = done > 0;
+    return `
+      ${i > 0 ? `<div class="j-arrow">›</div>` : ''}
+      <div class="j-phase" onclick="scrollToSection('${s.id}')"
+           style="border-color:${active ? s.colorA : 'var(--gray-200)'}">
+        <div class="j-phase-head">
+          <div class="j-icon" style="background:${s.light}">${s.icon}</div>
+          <div>
+            <div class="j-phase-label" style="color:${s.colorA}">${s.label}</div>
+            <div class="j-phase-title">${s.title}</div>
+            <div class="j-phase-sub">${total > 0 ? done + '/' + total + ' 개설' : '준비 중'}</div>
+          </div>
+        </div>
+        ${total > 0 ? `
+        <div class="j-mini-bar">
+          <div class="j-mini-fill" style="width:${pct}%;background:${s.colorA}"></div>
+        </div>
+        <div class="j-total">
+          <span style="color:${s.colorA};font-weight:700">${done} / ${total}</span>
+          <span class="j-pct" style="color:${s.colorA}">${pct}%</span>
+        </div>` : `
+        <div style="font-size:11px;color:var(--gray-400);font-weight:700;padding-top:4px">준비 중</div>`}
+      </div>`;
+  }).join('');
+}
+
+function buildCard(s) {
+  const { done, total } = getSectionProgress(s);
+  const pct = total > 0 ? Math.round(done / total * 100) : 0;
+  const topStyle = `background:linear-gradient(90deg,${s.colorA},${s.colorB})`;
+
+  let bodyHtml = '';
+  if (s.coming || s.subgroups.length === 0) {
+    bodyHtml = `
+      <div class="card-body">
+        <div class="coming-soon">
+          <div class="cs-icon">${s.icon}</div>
+          <div class="cs-text">콘텐츠 준비 중</div>
+          <div class="cs-sub">곧 업데이트될 예정입니다</div>
+        </div>
+      </div>`;
+  } else {
+    const sgHtml = s.subgroups.map(sg => {
+      const readyCount = sg.items.filter(it => it.fileReady).length;
+      const sgPct = sg.items.length > 0 ? Math.round(readyCount / sg.items.length * 100) : 0;
+      const unit = sg.itemLabel || '단원';
+      const dots = sg.items.map((it, idx) =>
+        it.fileReady
+          ? `<a class="prob-dot done" href="${it.fileUrl}"
+                style="--dot-color:${sg.colorA}"
+                title="${idx + 1}${unit}">${idx + 1}</a>`
+          : `<span class="prob-dot disabled"
+                   title="${idx + 1}${unit} (준비중)">${idx + 1}</span>`
+      ).join('');
+      return `
+        <div class="sub-group">
+          <div class="sub-group-header" data-sg-toggle="${sg.id}"
+               style="background:${sg.light};color:${sg.text}">
+            <div class="sub-group-left">
+              <div class="sub-group-title">${sg.label}</div>
+              <div class="sub-group-desc">${sg.desc}</div>
+            </div>
+            <div class="sub-group-right">
+              <span class="sub-group-badge">${readyCount}/${sg.items.length} 개설</span>
+              <span class="sub-group-toggle">▾</span>
+            </div>
+          </div>
+          <div class="sub-group-body open" id="sg_body_${sg.id}">
+            <div class="prog-bar" style="margin-bottom:12px">
+              <div class="prog-fill" style="width:${sgPct}%;background:linear-gradient(90deg,${sg.colorA},${sg.colorB})"></div>
+            </div>
+            <div class="dot-grid">${dots}</div>
+            <div style="font-size:11px;color:var(--gray-400);margin-top:6px">번호를 클릭하면 학습 페이지로 이동합니다.</div>
+          </div>
+        </div>`;
+    }).join('');
+    bodyHtml = `<div class="card-body"><div class="sub-groups">${sgHtml}</div></div>`;
+  }
+
+  return `
+    <div class="section-card" id="sec_${s.id}">
+      <div class="card-top" style="${topStyle}"></div>
+      <div class="card-header">
+        <div class="card-icon" style="background:${s.light}">${s.icon}</div>
+        <div class="card-info">
+          <div class="card-section-label" style="color:${s.colorA}">${s.label}</div>
+          <div class="card-title">${s.title}</div>
+          <div class="card-subtitle">${s.desc}</div>
+        </div>
+      </div>
+      ${bodyHtml}
+    </div>`;
+}
+
+function renderSections() {
+  const grid = document.getElementById('sectionGrid');
+  grid.innerHTML = SECTIONS.map(s => buildCard(s)).join('');
+  grid.querySelectorAll('[data-sg-toggle]').forEach(el =>
+    el.addEventListener('click', () => {
+      const body = document.getElementById('sg_body_' + el.dataset.sgToggle);
+      const tog  = el.querySelector('.sub-group-toggle');
+      if (body) {
+        body.classList.toggle('open');
+        if (tog) tog.style.transform = body.classList.contains('open') ? 'rotate(180deg)' : '';
+      }
+    })
+  );
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById('sec_' + id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+renderJourney();
+renderSections();
+</script>
+</body>
+</html>

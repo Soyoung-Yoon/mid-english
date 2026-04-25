@@ -1,0 +1,83 @@
+[핵심 문법]
+
+1. be동사
+
+I am Jihun, and my best friend is Minsu.
+You are strong.
+We are not good players.
+Is Mina a good student?
+Are they teachers, too?
+
+be동사는 '~이다', '(~에) 있다'의 의미를 가지며,
+주어에 따라 am, are, is로 변한다.
+
+I → am
+You → are
+He/She/It → is
+We/You/They → are
+
+I'm a doctor.
+He is my brother.
+They're at the cafe.
+
+2. be동사의 부정문
+
+be동사 + not
+
+I am not in the library.
+She is not a teacher.
+We are not hungry.
+
+3. be동사의 의문문
+
+Be동사 + 주어?
+
+Are they good friends?
+Yes, they are. / No, they aren't.
+
+
+[일반동사]
+
+I play the guitar, and Minsu plays the drums.
+They have three cats.
+She doesn't talk much.
+Do you walk to school?
+Does Jiho get up early?
+
+일반동사는 be동사를 제외한 대부분의 동사로, 주어의 동작이나 상태를 나타낸다.
+
+1. 주어가 3인칭 단수일 때 일반동사의 변화
+
+대부분의 동사 + -s
+talks, likes, reads, gets, smiles, feels, sleeps
+
+-s, -o, -x, -sh, -ch로 끝나는 동사 + -es
+passes, brushes, does, goes, fixes, catches
+
+자음 + y → y를 i로 바꾸고 + -es
+cry → cries, fly → flies, study → studies, try → tries
+
+불규칙 변화
+have → has
+
+He goes swimming every Saturday.
+Mr. Smith studies science.
+He has a new book.
+
+2. 일반동사의 부정문
+
+주어 + do not(don't) + 동사원형
+주어가 3인칭 단수 → does not(doesn't)
+
+I do not play basketball.
+She doesn't like pizza.
+
+3. 일반동사의 의문문
+
+Do/Does + 주어 + 동사원형?
+
+Yes, 주어 + do/does.
+No, 주어 + don't/doesn't.
+
+Does he play tennis?
+Yes, he does. / No, he doesn't.
