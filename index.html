@@ -354,11 +354,30 @@ const SECTIONS = [
     light: '#fdf2ee', mid: '#f0c4b3', text: '#a04828',
     icon: '📋',
     label: '문제풀이',
-    title: '문제풀이',
-    subtitle: '어휘 · 대화 · 학교시험',
-    desc: '단원별 어휘 · 대화 · 학교시험 문제',
-    coming: true,
-    subgroups: []
+    title: '학교 시험 100점 맞기',
+    subtitle: '총 9회 · 즉시 채점 · 해설 제공',
+    desc: '학교 시험 유형 완벽 대비 문제풀이',
+    subgroups: [
+      {
+        id: 'school_test',
+        label: '📋 학교 시험 100점 맞기',
+        colorA: '#c05a38', colorB: '#a04828',
+        light: '#fdf2ee', mid: '#f0c4b3', text: '#a04828',
+        desc: '즉시 채점 · 상세 해설 · TTS 지문 듣기',
+        itemLabel: '회',
+        items: [
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: 'school_test03.html', fileReady: true },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+          { fileUrl: '', fileReady: false },
+        ]
+      }
+    ]
   }
 ];
 
@@ -422,13 +441,14 @@ function buildCard(s) {
     const sgHtml = s.subgroups.map(sg => {
       const readyCount = sg.items.filter(it => it.fileReady).length;
       const sgPct = sg.items.length > 0 ? Math.round(readyCount / sg.items.length * 100) : 0;
+      const unit = sg.itemLabel || '단원';
       const dots = sg.items.map((it, idx) =>
         it.fileReady
           ? `<a class="prob-dot done" href="${it.fileUrl}"
                 style="--dot-color:${sg.colorA}"
-                title="${idx + 1}단원">${idx + 1}</a>`
+                title="${idx + 1}${unit}">${idx + 1}</a>`
           : `<span class="prob-dot disabled"
-                   title="${idx + 1}단원 (준비중)">${idx + 1}</span>`
+                   title="${idx + 1}${unit} (준비중)">${idx + 1}</span>`
       ).join('');
       return `
         <div class="sub-group">
@@ -455,17 +475,6 @@ function buildCard(s) {
     bodyHtml = `<div class="card-body"><div class="sub-groups">${sgHtml}</div></div>`;
   }
 
-  const progressHtml = total > 0 ? `
-    <div class="card-progress-area">
-      <div class="progress-row">
-        <span style="color:${s.colorA};font-weight:700">${done} <span style="color:var(--gray-400);font-weight:400">/ ${total} 개설</span></span>
-        <span style="font-size:13px;font-weight:800;color:${s.colorA}">${pct}%</span>
-      </div>
-      <div class="prog-bar">
-        <div class="prog-fill" style="width:${pct}%;background:linear-gradient(90deg,${s.colorA},${s.colorB})"></div>
-      </div>
-    </div>` : '';
-
   return `
     <div class="section-card" id="sec_${s.id}">
       <div class="card-top" style="${topStyle}"></div>
@@ -477,7 +486,6 @@ function buildCard(s) {
           <div class="card-subtitle">${s.desc}</div>
         </div>
       </div>
-      ${progressHtml}
       ${bodyHtml}
     </div>`;
 }

@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>학교 시험 100점 맞기 3회 | 중학 영어</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#faf6f0; --card:#fff; --ink:#1a1a2e; --sub:#6b7280;
+  --accent:#e07a5f; --accent2:#3d405b; --border:#e8e0d4;
+  --shadow:0 4px 20px rgba(26,26,46,.08); --shadow-lg:0 10px 36px rgba(26,26,46,.14);
+  --green:#059669; --red:#be123c; --purple:#7c3aed;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;}
+
+/* HEADER */
+.header{
+  background:linear-gradient(135deg,#120f28 0%,#1e1b3a 50%,#2d1b5e 100%);
+  background-size:300% 300%; animation:heroShift 10s ease infinite;
+  padding:40px 24px 56px; text-align:center; position:relative; overflow:hidden;
+}
+@keyframes heroShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.header::before{
+  content:''; position:absolute; inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,.06) 1.5px,transparent 1.5px);
+  background-size:30px 30px; pointer-events:none;
+}
+.header-inner{position:relative;z-index:1;}
+.header-badge{
+  display:inline-block; background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.18);
+  color:#f9a875; font-size:12px; font-weight:700; letter-spacing:1px;
+  padding:4px 14px; border-radius:20px; margin-bottom:14px;
+}
+.header h1{
+  font-family:'Playfair Display',serif; color:#fff;
+  font-size:clamp(20px,4vw,30px); font-weight:900; margin-bottom:6px; letter-spacing:-.5px;
+}
+.header h1 em{
+  background:linear-gradient(90deg,#f9a875,#e07a5f);
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent; font-style:normal;
+}
+.header-sub{color:rgba(255,255,255,.5);font-size:13px;}
+
+/* CONTAINER */
+.container{max-width:860px;margin:0 auto;padding:0 16px 100px;}
+
+/* SUMMARY */
+.summary-card{
+  background:#fff; border-radius:16px; box-shadow:var(--shadow-lg); border:1px solid var(--border);
+  padding:18px 24px; margin:-28px auto 28px; position:relative; z-index:10;
+  display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+}
+.summary-card h2{font-size:15px;font-weight:800;color:var(--accent2);margin-bottom:3px;}
+.summary-card p{font-size:12px;color:var(--sub);}
+
+/* LIVE SCORE PILL */
+.live-score{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--accent2); color:#fff; padding:6px 16px; border-radius:20px;
+  font-size:13px; font-weight:800; white-space:nowrap; flex-shrink:0;
+}
+.live-score .score-frac{font-size:18px; font-family:'Playfair Display',serif;}
+
+/* FINAL SCORE */
+.final-score{
+  background:#fff; border-radius:16px; border:2px solid var(--accent);
+  padding:28px 24px; text-align:center; margin-bottom:28px; display:none;
+  animation:fadeIn .4s ease;
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.final-score.show{display:block;}
+.score-num{font-family:'Playfair Display',serif;font-size:54px;font-weight:900;color:var(--accent2);line-height:1;}
+.score-label{font-size:13px;color:var(--sub);margin-top:4px;}
+.score-msg{font-size:15px;font-weight:700;color:var(--accent2);margin-top:10px;}
+.score-bars{display:flex;gap:3px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+.s-dot{width:18px;height:18px;border-radius:4px;background:var(--border);}
+.s-dot.ok{background:var(--green);}
+.s-dot.ng{background:var(--red);}
+
+/* SECTION LABEL */
+.sec-label{
+  font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--sub); margin:28px 0 12px; padding-left:10px; border-left:3px solid var(--accent);
+}
+
+/* PASSAGE */
+.passage-block{
+  background:#f0f4fa; border:1.5px solid #c8d4e8; border-radius:12px;
+  padding:18px 22px; margin-bottom:10px;
+}
+.passage-label{font-size:11px;font-weight:700;color:#4a6fa5;letter-spacing:1px;margin-bottom:10px;}
+.passage-text{font-size:14px;line-height:1.95;white-space:pre-wrap;color:var(--ink);}
+.passage-missing{
+  display:flex;align-items:flex-start;gap:10px; background:#fff8e1;border:1px solid #f59e0b;
+  border-radius:8px;padding:10px 14px;font-size:12px;color:#92400e;margin-top:10px;line-height:1.6;
+}
+.tts-bar{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap;}
+.tts-btn{
+  display:inline-flex;align-items:center;gap:5px; padding:5px 12px;border-radius:20px;
+  border:1.5px solid var(--accent); background:#fff;color:var(--accent);
+  font-size:12px;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;
+}
+.tts-btn:hover,.tts-btn.speaking{background:var(--accent);color:#fff;}
+.tts-stop{
+  padding:5px 10px;border-radius:20px;border:1.5px solid var(--sub);
+  background:#fff;color:var(--sub);font-size:12px;font-weight:700;
+  cursor:pointer;transition:all .2s;font-family:'Noto Sans KR',sans-serif;
+}
+.tts-stop:hover{background:var(--sub);color:#fff;}
+
+/* Q CARD */
+.q-card{
+  background:var(--card);border-radius:12px;box-shadow:var(--shadow);
+  margin-bottom:14px;border:1.5px solid var(--border);
+  border-left:4px solid var(--accent2);overflow:hidden;
+  transition:border-left-color .3s;
+}
+.q-card.correct{border-left-color:var(--green);}
+.q-card.wrong{border-left-color:var(--red);}
+.q-card.subj{border-left-color:var(--purple);}
+.q-card.subj.done{border-left-color:#3a6a9e;}
+
+.q-head{padding:16px 20px 12px;}
+.q-num-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
+.q-num{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:28px;height:28px;border-radius:8px;
+  background:var(--accent2);color:#fff;font-size:12px;font-weight:800;flex-shrink:0;
+}
+.q-card.correct .q-num{background:var(--green);}
+.q-card.wrong .q-num{background:var(--red);}
+.type-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px;}
+.badge-mc{background:#eef0f8;color:var(--accent2);}
+.badge-fill{background:#f0fdf4;color:var(--green);}
+.badge-essay{background:#f5f0fb;color:var(--purple);}
+.warn-tag{font-size:10px;font-weight:700;color:#f59e0b;background:#fff8e1;padding:2px 7px;border-radius:8px;border:1px solid #fde68a;}
+
+.q-text{font-size:14px;line-height:1.85;white-space:pre-wrap;color:var(--ink);font-weight:500;}
+
+/* CHOICES */
+.choices{padding:0 20px 16px;display:flex;flex-direction:column;gap:6px;}
+.choice-item{
+  display:flex;align-items:flex-start;gap:10px;padding:9px 14px;border-radius:8px;
+  border:1.5px solid var(--border);cursor:pointer;transition:all .18s;background:#fff;
+}
+.choices.locked .choice-item{cursor:default;}
+.choice-item:hover:not(.locked-item){border-color:var(--accent2);background:#f5f6fb;}
+.choice-item.c-ok{border-color:var(--green)!important;background:#f0fdf4!important;}
+.choice-item.c-ng{border-color:var(--red)!important;background:#fff1f3!important;}
+.choice-key{font-weight:700;font-size:14px;color:var(--sub);min-width:20px;flex-shrink:0;}
+.choice-item.c-ok .choice-key{color:var(--green);}
+.choice-item.c-ng .choice-key{color:var(--red);}
+.choice-text{font-size:13px;line-height:1.7;white-space:pre-wrap;}
+input[type=radio]{display:none;}
+
+/* FILL */
+.fill-area{padding:0 20px 0;}
+.fill-input{
+  width:100%;padding:10px 14px;border-radius:8px;
+  border:1.5px solid var(--border);font-family:'Noto Sans KR',sans-serif;
+  font-size:13px;outline:none;transition:border-color .2s;resize:vertical;min-height:44px;
+}
+.fill-input:focus{border-color:var(--accent2);}
+.fill-input:disabled{background:#f5f5f5;color:#888;}
+.confirm-btn{
+  margin:10px 0 16px; padding:9px 22px; border-radius:100px; border:none;
+  background:var(--purple); color:#fff; font-family:'Noto Sans KR',sans-serif;
+  font-size:13px; font-weight:800; cursor:pointer; transition:all .2s;
+  display:block;
+}
+.confirm-btn:hover{opacity:.85;transform:translateY(-1px);}
+.confirm-btn:disabled{background:#ccc;cursor:default;transform:none;}
+
+/* RESULT */
+.q-result{
+  display:none; padding:14px 20px; border-top:1px solid var(--border);
+  background:#fafafa; animation:slideDown .25s ease;
+}
+@keyframes slideDown{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+.q-result.show{display:block;}
+.result-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-wrap:wrap;}
+.result-badge{
+  display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;
+  padding:5px 14px;border-radius:20px;
+}
+.rb-ok{background:#dcfce7;color:var(--green);}
+.rb-ng{background:#ffe4e6;color:var(--red);}
+.rb-check{background:#f5f0fb;color:var(--purple);}
+
+.model-answer{
+  background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;
+  padding:10px 14px;font-size:13px;line-height:1.75;margin-bottom:10px;white-space:pre-wrap;
+}
+.model-answer strong{color:#0369a1;}
+
+/* EXPLANATION — always visible after grading */
+.explanation{
+  background:#fffbeb;border:1px solid #fde68a;border-radius:8px;
+  padding:12px 14px;font-size:12.5px;line-height:1.9;color:#78350f;white-space:pre-wrap;
+}
+.expl-label{
+  font-size:11px;font-weight:700;color:#92400e;letter-spacing:.5px;margin-bottom:6px;
+  display:flex;align-items:center;gap:4px;
+}
+
+/* BOTTOM BAR */
+.bottom-bar{
+  position:sticky;bottom:0;left:0;right:0;
+  background:rgba(250,246,240,.96);backdrop-filter:blur(8px);
+  border-top:1px solid var(--border);padding:12px 20px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:100;
+}
+.bottom-info{font-size:13px;color:var(--sub);}
+.bottom-info strong{color:var(--accent2);}
+
+@media(max-width:600px){
+  .q-head{padding:14px 14px 10px;}
+  .choices{padding:0 14px 14px;}
+  .fill-area{padding:0 14px;}
+  .confirm-btn{margin:10px 14px 14px;}
+  .q-result{padding:12px 14px;}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-badge">📝 중학 영어 · 학교 시험 3회</div>
+    <h1>학교 시험 <em>100점 맞기</em></h1>
+    <p class="header-sub">선택하는 즉시 채점 · 해설 자동 표시 · TTS 지원</p>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="summary-card">
+    <div>
+      <h2>총 23문제 (객관식 16 · 서술형 7)</h2>
+      <p>보기를 클릭하면 바로 채점됩니다. 서술형은 <strong>확인</strong> 버튼을 눌러 모범 답안을 확인하세요.</p>
+    </div>
+    <div class="live-score" id="liveScore">
+      <span>객관식</span>
+      <span class="score-frac" id="scoreFrac">0 / 16</span>
+    </div>
+  </div>
+
+  <!-- FINAL SCORE (appears when all MC done) -->
+  <div class="final-score" id="finalScore">
+    <div class="score-num" id="scoreNum">–</div>
+    <div class="score-label" id="scoreLabel"></div>
+    <div class="score-msg" id="scoreMsg"></div>
+    <div class="score-bars" id="scoreBars"></div>
+  </div>
+
+  <!-- ══ 어휘 ══ -->
+  <div class="sec-label">어휘</div>
+
+  <!-- Q01 -->
+  <div class="q-card" id="qc-01">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">01</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'important: not the same as someone or something. tip: a piece of advice or useful information. change: to make someone or something different. snack: a small amount of food eaten between meals. practice: to do something again and again to become better at it.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 중 단어의 영어풀이가 <strong>적절하지 않은</strong> 것은?</div>
+    </div>
+    <div class="choices" id="ch-01">
+      <label class="choice-item" onclick="grade('q01',0)"><input type="radio" name="q01" value="0"><span class="choice-key">①</span><span class="choice-text">important : not the same as someone or something</span></label>
+      <label class="choice-item" onclick="grade('q01',1)"><input type="radio" name="q01" value="1"><span class="choice-key">②</span><span class="choice-text">tip : a piece of advice or useful information</span></label>
+      <label class="choice-item" onclick="grade('q01',2)"><input type="radio" name="q01" value="2"><span class="choice-key">③</span><span class="choice-text">change : to make someone or something different</span></label>
+      <label class="choice-item" onclick="grade('q01',3)"><input type="radio" name="q01" value="3"><span class="choice-key">④</span><span class="choice-text">snack : a small amount of food eaten between meals</span></label>
+      <label class="choice-item" onclick="grade('q01',4)"><input type="radio" name="q01" value="4"><span class="choice-key">⑤</span><span class="choice-text">practice : to do something again and again to become better at it</span></label>
+    </div>
+    <div class="q-result" id="result-01">
+      <div class="result-row">
+        <span class="result-badge" id="badge-01"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ①</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>① important(중요한)의 올바른 영어 정의는 "having great significance or effect"입니다.
+제시된 "not the same as someone or something"은 → different(다른)의 정의입니다.
+②~⑤는 모두 올바른 영어 정의입니다.</div>
+    </div>
+  </div>
+
+  <!-- ══ 언어 형식 ══ -->
+  <div class="sec-label">언어 형식</div>
+
+  <!-- Q02 서술형 -->
+  <div class="q-card subj" id="qc-02">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">02</span>
+        <span class="type-badge badge-fill">서술형</span>
+        <button class="tts-btn" onclick="speak(this,'He is blank foolish blank funny.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 우리말에 맞도록 빈칸에 들어갈 적절한 말을 쓰시오.
+
+그는 바보 같은 게 아니라 재미있다.
+→ He is ______ foolish ______ funny.</div>
+    </div>
+    <div class="fill-area">
+      <input class="fill-input" id="fill-02" placeholder="빈칸 ①, ②를 순서대로 쓰세요 (예: not / but)">
+      <button class="confirm-btn" id="cb-02" onclick="showSubj('02')">확인 →</button>
+    </div>
+    <div class="q-result" id="result-02">
+      <div class="result-row"><span class="result-badge rb-check">📝 모범 답안</span></div>
+      <div class="model-answer"><strong>정답: not / but</strong>
+→ He is <strong>not</strong> foolish <strong>but</strong> funny.</div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>"A가 아니라 B이다" → <strong>not A but B</strong> 구문을 사용합니다.
+• A, B 자리에는 같은 품사·구조가 와야 합니다.
+• foolish(형용사) — but — funny(형용사) ✓</div>
+    </div>
+  </div>
+
+  <!-- Q03 -->
+  <div class="q-card" id="qc-03">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">03</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'My classmate Pablo is blank Spain. 1: Welcome blank this beautiful city. 2: We go out blank a walk on Saturdays. 3: She works blank at the gym every day. 4: I will drink more water blank now on. 5: She teaches chefs all blank the world.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 문장의 빈칸에 들어갈 말과 <strong>같은 말</strong>이 들어가는 것은?
+
+My classmate, Pablo, is ______ Spain.</div>
+    </div>
+    <div class="choices" id="ch-03">
+      <label class="choice-item" onclick="grade('q03',0)"><input type="radio" name="q03" value="0"><span class="choice-key">①</span><span class="choice-text">Welcome ______ this beautiful city.</span></label>
+      <label class="choice-item" onclick="grade('q03',1)"><input type="radio" name="q03" value="1"><span class="choice-key">②</span><span class="choice-text">We go out ______ a walk on Saturdays.</span></label>
+      <label class="choice-item" onclick="grade('q03',2)"><input type="radio" name="q03" value="2"><span class="choice-key">③</span><span class="choice-text">She works ______ at the gym every day.</span></label>
+      <label class="choice-item" onclick="grade('q03',3)"><input type="radio" name="q03" value="3"><span class="choice-key">④</span><span class="choice-text">I will drink more water ______ now on.</span></label>
+      <label class="choice-item" onclick="grade('q03',4)"><input type="radio" name="q03" value="4"><span class="choice-key">⑤</span><span class="choice-text">She teaches chefs all ______ the world.</span></label>
+    </div>
+    <div class="q-result" id="result-03">
+      <div class="result-row">
+        <span class="result-badge" id="badge-03"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ④</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>주어진 문장: "is <strong>from</strong> Spain" → 출신을 나타내는 전치사 <strong>from</strong>
+
+① Welcome <strong>to</strong> (to) ② go out <strong>for</strong> a walk (for)
+③ works <strong>out</strong> — out은 부사, 전치사 빈칸 없음
+⑤ all <strong>over</strong> the world (over)
+④ <strong>from</strong> now on (지금부터) ✓ → 정답: ④</div>
+    </div>
+  </div>
+
+  <!-- Q04 -->
+  <div class="q-card" id="qc-04">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">04</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'A: I eat fast food five times a week. B: That\'s bad for your health. Blank. 1: That sounds perfect. 2: How often do you eat fast food? 3: Why don\'t you eat fast food less often? 4: How about eating fast food more often? 5: Why don\'t you eat a hamburger for lunch?','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">Which one is the best answer for the blank?
+
+A: I eat fast food five times a week.
+B: That's bad for your health. ______</div>
+    </div>
+    <div class="choices" id="ch-04">
+      <label class="choice-item" onclick="grade('q04',0)"><input type="radio" name="q04" value="0"><span class="choice-key">①</span><span class="choice-text">That sounds perfect.</span></label>
+      <label class="choice-item" onclick="grade('q04',1)"><input type="radio" name="q04" value="1"><span class="choice-key">②</span><span class="choice-text">How often do you eat fast food?</span></label>
+      <label class="choice-item" onclick="grade('q04',2)"><input type="radio" name="q04" value="2"><span class="choice-key">③</span><span class="choice-text">Why don't you eat fast food less often?</span></label>
+      <label class="choice-item" onclick="grade('q04',3)"><input type="radio" name="q04" value="3"><span class="choice-key">④</span><span class="choice-text">How about eating fast food more often?</span></label>
+      <label class="choice-item" onclick="grade('q04',4)"><input type="radio" name="q04" value="4"><span class="choice-key">⑤</span><span class="choice-text">Why don't you eat a hamburger for lunch?</span></label>
+    </div>
+    <div class="q-result" id="result-04">
+      <div class="result-row">
+        <span class="result-badge" id="badge-04"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ③</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>"건강에 나쁘다"고 한 뒤 이어지는 말 → 패스트푸드 섭취를 줄이라는 제안이 자연스럽습니다.
+③ "Why don't you ~?" = 제안 표현 / <strong>less often</strong> = 덜 자주 ✓
+
+① 완벽하다? — 맥락 불일치
+② A가 이미 5번이라고 했으므로 재질문 어색
+④ 더 자주 먹으라고? — 건강에 나쁘다는 말과 모순
+⑤ 햄버거를 먹으라고? — 주제에서 벗어남</div>
+    </div>
+  </div>
+
+  <!-- Q05 -->
+  <div class="q-card" id="qc-05">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">05</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'1: A: How often do you meet Jenny? B: Twice a week. 2: A: How often do you watch movies? B: I like watching movies. 3: A: Can I help you? B: Yes I would like to take piano lessons. 4: A: How often does Tom call you? B: He calls me every day. 5: A: Why don\'t you play soccer with me? B: I\'m afraid I can\'t. I have lots of homework.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 중 짝지어진 대화가 <strong>어색한</strong> 것은?</div>
+    </div>
+    <div class="choices" id="ch-05">
+      <label class="choice-item" onclick="grade('q05',0)"><input type="radio" name="q05" value="0"><span class="choice-key">①</span><span class="choice-text">A: How often do you meet Jenny?
+B: Twice a week.</span></label>
+      <label class="choice-item" onclick="grade('q05',1)"><input type="radio" name="q05" value="1"><span class="choice-key">②</span><span class="choice-text">A: How often do you watch movies?
+B: I like watching movies.</span></label>
+      <label class="choice-item" onclick="grade('q05',2)"><input type="radio" name="q05" value="2"><span class="choice-key">③</span><span class="choice-text">A: Can I help you?
+B: Yes, I'd like to take piano lessons.</span></label>
+      <label class="choice-item" onclick="grade('q05',3)"><input type="radio" name="q05" value="3"><span class="choice-key">④</span><span class="choice-text">A: How often does Tom call you?
+B: He calls me every day.</span></label>
+      <label class="choice-item" onclick="grade('q05',4)"><input type="radio" name="q05" value="4"><span class="choice-key">⑤</span><span class="choice-text">A: Why don't you play soccer with me?
+B: I'm afraid I can't. I have lots of homework.</span></label>
+    </div>
+    <div class="q-result" id="result-05">
+      <div class="result-row">
+        <span class="result-badge" id="badge-05"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ②</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>② A가 "How often ~?(얼마나 자주)"라고 <strong>빈도</strong>를 물었는데,
+B가 "I like watching movies.(좋아해요)"라고 <strong>선호</strong>로 답해 어색합니다.
+
+"How often ~?"에는 빈도 표현으로 답해야 합니다.
+예) Once a week. / Every day. / Twice a month.
+① ③ ④ ⑤ 모두 질문-답변이 자연스럽습니다.</div>
+    </div>
+  </div>
+
+  <!-- ══ 06~08 대화 ══ -->
+  <div class="sec-label">[06~08] 다음 대화를 읽고 물음에 답하시오.</div>
+
+  <div class="passage-block">
+    <div class="passage-label">📖 대화 지문 — 배드민턴 수업 등록</div>
+    <div class="passage-text" id="p0608">M: Can I help you?
+G: Yes, I'd like to take some badminton lessons.
+M: Are you a beginner?
+G: Yes, I am.
+M: OK. ⓐ ______
+G: Two times a week, but ⓑ ______
+M: Then why don't you take Mr. Kim's class?
+   His class meets at 6 p.m. on Mondays and Thursdays.
+G: That sounds perfect!</div>
+    <div class="tts-bar">
+      <button class="tts-btn" onclick="speak(this,document.getElementById('p0608').innerText,'en-US')">🔊 지문 듣기</button>
+      <button class="tts-stop" onclick="stopSpeak()">■ 정지</button>
+    </div>
+  </div>
+
+  <!-- Q06 서술형 -->
+  <div class="q-card subj" id="qc-06">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">06</span>
+        <span class="type-badge badge-essay">서술형</span>
+      </div>
+      <div class="q-text">위 대화의 밑줄 친 ⓐ와 같은 의미가 되도록 조건에 맞게 문장을 쓰시오.
+
+조건 1. take, want, lessons, often을 이용하여 총 8단어로 쓸 것.
+조건 2. 주어와 동사를 갖춘 완전한 문장으로 쓸 것.</div>
+    </div>
+    <div class="fill-area">
+      <input class="fill-input" id="fill-06" placeholder="8단어 영어 문장을 쓰세요">
+      <button class="confirm-btn" id="cb-06" onclick="showSubj('06')">확인 →</button>
+    </div>
+    <div class="q-result" id="result-06">
+      <div class="result-row"><span class="result-badge rb-check">📝 모범 답안</span></div>
+      <div class="model-answer"><strong>How often do you want to take lessons?</strong></div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>ⓐ = "얼마나 자주 수업을 받기 원하나요?"
+
+단어 수: How(1) often(2) do(3) you(4) want(5) to(6) take(7) lessons(8) → 총 8단어 ✓
+• <strong>How often</strong>: 빈도를 묻는 표현
+• <strong>want to + 동사원형</strong>: ~하기를 원하다
+• <strong>take lessons</strong>: 수업을 받다</div>
+    </div>
+  </div>
+
+  <!-- Q07 -->
+  <div class="q-card" id="qc-07">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">07</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'1: I don\'t want Monday classes. 2: I can only come after five p.m. 3: I can take lessons once a week. 4: I will take lessons on weekends. 5: I can begin the lessons at seven p.m.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">위 대화의 빈칸 ⓑ에 들어갈 말로 가장 적절한 것은?</div>
+    </div>
+    <div class="choices" id="ch-07">
+      <label class="choice-item" onclick="grade('q07',0)"><input type="radio" name="q07" value="0"><span class="choice-key">①</span><span class="choice-text">I don't want Monday classes.</span></label>
+      <label class="choice-item" onclick="grade('q07',1)"><input type="radio" name="q07" value="1"><span class="choice-key">②</span><span class="choice-text">I can only come after 5 p.m.</span></label>
+      <label class="choice-item" onclick="grade('q07',2)"><input type="radio" name="q07" value="2"><span class="choice-key">③</span><span class="choice-text">I can take lessons once a week.</span></label>
+      <label class="choice-item" onclick="grade('q07',3)"><input type="radio" name="q07" value="3"><span class="choice-key">④</span><span class="choice-text">I will take lessons on weekends.</span></label>
+      <label class="choice-item" onclick="grade('q07',4)"><input type="radio" name="q07" value="4"><span class="choice-key">⑤</span><span class="choice-text">I can begin the lessons at 7 p.m.</span></label>
+    </div>
+    <div class="q-result" id="result-07">
+      <div class="result-row">
+        <span class="result-badge" id="badge-07"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ②</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>M이 "6 p.m. 월·목요일" 수업을 추천 → G가 "That sounds perfect!"라고 반응합니다.
+ⓑ에서 G가 시간 조건을 말해야 6시 수업 추천이 perfect!로 이어집니다.
+
+② "오후 5시 이후에만 올 수 있다" → 6시 수업이 조건 충족 ✓
+
+① 월요일 싫다 → 월·목 수업을 perfect라고? 모순
+③ 주 1회 원한다 → 앞서 "two times a week"라고 했으므로 불일치
+④ 주말에만 → 평일(월·목) 수업이 perfect라고? 모순
+⑤ 7시에 시작 → 6시 수업인데 7시 시작이라고 하면 모순</div>
+    </div>
+  </div>
+
+  <!-- Q08 -->
+  <div class="q-card" id="qc-08">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">08</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'Which question cannot be answered? 1: What sport does the girl want to learn? 2: Does the girl play badminton well? 3: What time does Mr Kim\'s class begin? 4: Does Mr Kim\'s class meet on Mondays? 5: When does Mr Kim\'s class end?','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">위 대화를 읽고 <strong>대답할 수 없는</strong> 질문은?</div>
+    </div>
+    <div class="choices" id="ch-08">
+      <label class="choice-item" onclick="grade('q08',0)"><input type="radio" name="q08" value="0"><span class="choice-key">①</span><span class="choice-text">What sport does the girl want to learn?</span></label>
+      <label class="choice-item" onclick="grade('q08',1)"><input type="radio" name="q08" value="1"><span class="choice-key">②</span><span class="choice-text">Does the girl play badminton well?</span></label>
+      <label class="choice-item" onclick="grade('q08',2)"><input type="radio" name="q08" value="2"><span class="choice-key">③</span><span class="choice-text">What time does Mr. Kim's class begin?</span></label>
+      <label class="choice-item" onclick="grade('q08',3)"><input type="radio" name="q08" value="3"><span class="choice-key">④</span><span class="choice-text">Does Mr. Kim's class meet on Mondays?</span></label>
+      <label class="choice-item" onclick="grade('q08',4)"><input type="radio" name="q08" value="4"><span class="choice-key">⑤</span><span class="choice-text">When does Mr. Kim's class end?</span></label>
+    </div>
+    <div class="q-result" id="result-08">
+      <div class="result-row">
+        <span class="result-badge" id="badge-08"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ⑤</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>① 배드민턴 — "I'd like to take some badminton lessons" ✓
+② 초보자 — "Are you a beginner? Yes, I am." ✓
+③ 오후 6시 — "His class meets at 6 p.m." ✓
+④ 네 — "on Mondays and Thursdays" ✓
+⑤ Mr. Kim 수업의 <strong>종료 시간</strong>은 대화에 전혀 언급되지 않습니다. → 대답 불가 ✓</div>
+    </div>
+  </div>
+
+  <!-- ══ 09~13 문법 ══ -->
+  <div class="sec-label">문법 — 조동사 · 현재진행형 · be going to</div>
+
+  <!-- Q09 -->
+  <div class="q-card" id="qc-09">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">09</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'This question is difficult. Only James blank answer the question.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 빈칸에 들어갈 말로 가장 적절한 것은?
+
+This question is difficult. Only James ______ answer the question.</div>
+    </div>
+    <div class="choices" id="ch-09">
+      <label class="choice-item" onclick="grade('q09',0)"><input type="radio" name="q09" value="0"><span class="choice-key">①</span><span class="choice-text">is</span></label>
+      <label class="choice-item" onclick="grade('q09',1)"><input type="radio" name="q09" value="1"><span class="choice-key">②</span><span class="choice-text">do</span></label>
+      <label class="choice-item" onclick="grade('q09',2)"><input type="radio" name="q09" value="2"><span class="choice-key">③</span><span class="choice-text">can</span></label>
+      <label class="choice-item" onclick="grade('q09',3)"><input type="radio" name="q09" value="3"><span class="choice-key">④</span><span class="choice-text">is going</span></label>
+      <label class="choice-item" onclick="grade('q09',4)"><input type="radio" name="q09" value="4"><span class="choice-key">⑤</span><span class="choice-text">are able to</span></label>
+    </div>
+    <div class="q-result" id="result-09">
+      <div class="result-row">
+        <span class="result-badge" id="badge-09"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ③</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>③ can: 조동사 <strong>can + 동사원형</strong> → "can answer" ✓
+
+① is: is answer — 동사 두 개 연속 불가
+② do: do answer — 의미 어색
+④ is going: to 없이 동사 연속 불가
+⑤ are able to: 주어 James(3인칭 단수)에는 <strong>is able to</strong>가 맞음 (are는 복수용)</div>
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="q-card" id="qc-10">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">10</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'A: blank. B: No I\'m not. I will do it tomorrow.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 대화의 빈칸에 들어갈 말로 가장 적절한 것은?
+
+A: ______
+B: No, I'm not. I will do it tomorrow.</div>
+    </div>
+    <div class="choices" id="ch-10">
+      <label class="choice-item" onclick="grade('q10',0)"><input type="radio" name="q10" value="0"><span class="choice-key">①</span><span class="choice-text">Will you do homework tomorrow?</span></label>
+      <label class="choice-item" onclick="grade('q10',1)"><input type="radio" name="q10" value="1"><span class="choice-key">②</span><span class="choice-text">Do you do homework every day?</span></label>
+      <label class="choice-item" onclick="grade('q10',2)"><input type="radio" name="q10" value="2"><span class="choice-key">③</span><span class="choice-text">Are you doing homework now?</span></label>
+      <label class="choice-item" onclick="grade('q10',3)"><input type="radio" name="q10" value="3"><span class="choice-key">④</span><span class="choice-text">Can you help me with the homework?</span></label>
+      <label class="choice-item" onclick="grade('q10',4)"><input type="radio" name="q10" value="4"><span class="choice-key">⑤</span><span class="choice-text">Are you going to do homework tomorrow?</span></label>
+    </div>
+    <div class="q-result" id="result-10">
+      <div class="result-row">
+        <span class="result-badge" id="badge-10"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ③</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>B의 대답 "No, I'm not." → be동사를 포함한 질문에 대한 부정 답변
+③ "Are you doing homework now?" → "No, I'm not (doing it now)." ✓
+
+① Will → "No, I won't."으로 답해야 함
+② Do → "No, I don't."으로 답해야 함
+④ Can → "No, I can't."으로 답해야 함
+⑤ "Are you going to ~?" — "No, I'm not." 가능하지만, B가 "I will do it tomorrow"(will)로 답하는 것이 going to 질문과 어색</div>
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="q-card" id="qc-11">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">11</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'1: Are you going to take a shower? 2: She is going to the subway station. 3: Many people are going to arrive early. 4: Alex is going to make spaghetti today. 5: I am going to watch a basketball game.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 중 밑줄 친 부분의 쓰임이 나머지와 <strong>다른</strong> 것은?</div>
+    </div>
+    <div class="choices" id="ch-11">
+      <label class="choice-item" onclick="grade('q11',0)"><input type="radio" name="q11" value="0"><span class="choice-key">①</span><span class="choice-text">Are you <u>going to</u> take a shower?</span></label>
+      <label class="choice-item" onclick="grade('q11',1)"><input type="radio" name="q11" value="1"><span class="choice-key">②</span><span class="choice-text">She <u>is going</u> to the subway station.</span></label>
+      <label class="choice-item" onclick="grade('q11',2)"><input type="radio" name="q11" value="2"><span class="choice-key">③</span><span class="choice-text">Many people <u>are going to</u> arrive early.</span></label>
+      <label class="choice-item" onclick="grade('q11',3)"><input type="radio" name="q11" value="3"><span class="choice-key">④</span><span class="choice-text">Alex <u>is going to</u> make spaghetti today.</span></label>
+      <label class="choice-item" onclick="grade('q11',4)"><input type="radio" name="q11" value="4"><span class="choice-key">⑤</span><span class="choice-text">I <u>am going to</u> watch a basketball game.</span></label>
+    </div>
+    <div class="q-result" id="result-11">
+      <div class="result-row">
+        <span class="result-badge" id="badge-11"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ②</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>① ③ ④ ⑤: "be going to + <strong>동사원형</strong>" = 미래 계획·의지 표현
+
+② "She is going <strong>to</strong> the subway station."
+→ is going = <strong>현재진행형</strong> (지금 지하철역으로 이동 중인 동작)
+→ to는 방향을 나타내는 전치사, be going to(미래)가 아닙니다.
+
+<strong>핵심 구분법</strong>: be going to 뒤에 동사원형 → 미래 / 장소 → 현재진행</div>
+    </div>
+  </div>
+
+  <!-- Q12 서술형 -->
+  <div class="q-card subj" id="qc-12">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">12</span>
+        <span class="type-badge badge-fill">서술형</span>
+        <button class="tts-btn" onclick="speak(this,'Alice and Tina blank in the pool now. Use the word swim.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 우리말에 맞도록 괄호 안의 단어를 이용하여 문장을 완성하시오.
+
+Alice와 Tina는 지금 수영장에서 수영하고 있다. (swim)
+→ Alice and Tina ______ in the pool now.</div>
+    </div>
+    <div class="fill-area">
+      <input class="fill-input" id="fill-12" placeholder="빈칸에 들어갈 동사 형태를 쓰세요">
+      <button class="confirm-btn" id="cb-12" onclick="showSubj('12')">확인 →</button>
+    </div>
+    <div class="q-result" id="result-12">
+      <div class="result-row"><span class="result-badge rb-check">📝 모범 답안</span></div>
+      <div class="model-answer"><strong>are swimming</strong></div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>주어 "Alice and Tina" = 복수 → be동사: <strong>are</strong>
+"지금 ~하고 있다" = 현재진행형: <strong>be + 동사원형-ing</strong>
+
+swim → <strong>swimming</strong>
+(단모음 + 단자음 끝 동사 → 마지막 자음을 겹침)
+비교: run→running, sit→sitting, swim→swimming
+
+→ Alice and Tina <strong>are swimming</strong> in the pool now.</div>
+    </div>
+  </div>
+
+  <!-- Q13 서술형 -->
+  <div class="q-card subj" id="qc-13">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">13</span>
+        <span class="type-badge badge-essay">서술형</span>
+        <button class="tts-btn" onclick="speak(this,'a. My sister is doing the dishes. b. I am having two movie tickets. c. Is Danny having lunch alone? d. Are the boys taking pictures? e. James won\'t able to arrive at five. f. She can helps you with your homework.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">다음 중 어법상 <strong>틀린</strong> 문장을 모두 찾아 기호를 쓰고, 바르게 고쳐 쓰시오.
+
+a. My sister is doing the dishes.
+b. I am having two movie tickets.
+c. Is Danny having lunch alone?
+d. Are the boys taking pictures?
+e. James won't able to arrive at five.
+f. She can helps you with your homework.</div>
+    </div>
+    <div class="fill-area">
+      <textarea class="fill-input" id="fill-13" placeholder="예) (b) → I have two movie tickets.&#10;틀린 문장을 모두 쓰세요."></textarea>
+      <button class="confirm-btn" id="cb-13" onclick="showSubj('13')">확인 →</button>
+    </div>
+    <div class="q-result" id="result-13">
+      <div class="result-row"><span class="result-badge rb-check">📝 모범 답안</span></div>
+      <div class="model-answer"><strong>틀린 문장: b, e, f (총 3개)</strong>
+
+(b) → I have two movie tickets.
+(e) → James won't be able to arrive at five.
+(f) → She can help you with your homework.</div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>a. ✓ "do the dishes(설거지하다)" = 동작 동사 → 진행형 가능
+b. ✗ "have(소유하다)" = <strong>상태 동사</strong> → 진행형 불가
+   → "I am having"(×) → "I have two movie tickets."(○)
+c. ✓ "have lunch(점심 먹다)" = 동작 의미 → 진행형 가능
+d. ✓ "take pictures(사진 찍다)" = 동작 동사 → 진행형 가능
+e. ✗ 조동사 will 뒤에는 반드시 <strong>동사원형 be</strong>가 필요
+   → "won't able to"(×) → "won't be able to"(○)
+f. ✗ 조동사 can 뒤에는 <strong>동사원형</strong>이 와야 함
+   → "can helps"(×) → "can help"(○)
+
+⭐ 핵심 정리
+• 상태 동사(have/소유, know, like 등) → 진행형 불가
+• 조동사(can, will, must…) 뒤 → 반드시 동사원형</div>
+    </div>
+  </div>
+
+  <!-- ══ 15~17 독해 (지문 없음) ══ -->
+  <div class="sec-label">[14~17] 독해 — Bella의 카프레제 꼬치 소개</div>
+
+  <div class="passage-block">
+    <div class="passage-label">📖 지문 — Bella의 카프레제 꼬치</div>
+    <div class="passage-missing">⚠️ 원본 시험지의 [14~17] 지문과 14번 문제가 파일에 포함되지 않았습니다. 15~17번은 내용 추론 기반 잠정 답안입니다.</div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="q-card" id="qc-15">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">15</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <span class="warn-tag">⚠️ 지문 없음</span>
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓔ 중 가리키는 대상이 <strong>다른</strong> 것은?</div>
+    </div>
+    <div class="choices" id="ch-15">
+      <label class="choice-item" onclick="grade('q15',0)"><input type="radio" name="q15" value="0"><span class="choice-key">①</span><span class="choice-text">ⓐ</span></label>
+      <label class="choice-item" onclick="grade('q15',1)"><input type="radio" name="q15" value="1"><span class="choice-key">②</span><span class="choice-text">ⓑ</span></label>
+      <label class="choice-item" onclick="grade('q15',2)"><input type="radio" name="q15" value="2"><span class="choice-key">③</span><span class="choice-text">ⓒ</span></label>
+      <label class="choice-item" onclick="grade('q15',3)"><input type="radio" name="q15" value="3"><span class="choice-key">④</span><span class="choice-text">ⓓ</span></label>
+      <label class="choice-item" onclick="grade('q15',4)"><input type="radio" name="q15" value="4"><span class="choice-key">⑤</span><span class="choice-text">ⓔ</span></label>
+    </div>
+    <div class="q-result" id="result-15">
+      <div class="result-row">
+        <span class="result-badge" id="badge-15"></span>
+        <span style="font-size:12px;color:#f59e0b">⚠️ 잠정 답안: ④</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설 (잠정)</div>⚠️ 원본 지문이 없어 정확한 풀이가 어렵습니다.
+
+이 유형의 풀이법:
+• ⓐ~ⓔ 중 대부분이 특정 인물(예: Bella)을 가리키고
+• 하나만 다른 대상(음식, 사물 등)을 가리킵니다.
+원본 시험지에서 각 ⓐ~ⓔ의 지시 대상을 직접 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="q-card" id="qc-16">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">16</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <span class="warn-tag">⚠️ 지문 없음</span>
+        <button class="tts-btn" onclick="speak(this,'1: a white or brown powder used for making bread. 2: a piece of advice or useful information. 3: a small amount of food eaten between meals. 4: a person who prepares food for people to eat. 5: the first meal of the day usually in the morning.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓑ의 영어풀이로 가장 적절한 것은?</div>
+    </div>
+    <div class="choices" id="ch-16">
+      <label class="choice-item" onclick="grade('q16',0)"><input type="radio" name="q16" value="0"><span class="choice-key">①</span><span class="choice-text">a white or brown powder used for making bread, cakes, etc.</span></label>
+      <label class="choice-item" onclick="grade('q16',1)"><input type="radio" name="q16" value="1"><span class="choice-key">②</span><span class="choice-text">a piece of advice or useful information</span></label>
+      <label class="choice-item" onclick="grade('q16',2)"><input type="radio" name="q16" value="2"><span class="choice-key">③</span><span class="choice-text">a small amount of food eaten between meals</span></label>
+      <label class="choice-item" onclick="grade('q16',3)"><input type="radio" name="q16" value="3"><span class="choice-key">④</span><span class="choice-text">a person who prepares food for people to eat; cook</span></label>
+      <label class="choice-item" onclick="grade('q16',4)"><input type="radio" name="q16" value="4"><span class="choice-key">⑤</span><span class="choice-text">the first meal of the day, usually in the morning</span></label>
+    </div>
+    <div class="q-result" id="result-16">
+      <div class="result-row">
+        <span class="result-badge" id="badge-16"></span>
+        <span style="font-size:12px;color:#f59e0b">⚠️ 잠정 답안: ③</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설 (잠정)</div>⚠️ 원본 지문이 없어 정확한 풀이가 어렵습니다.
+
+선택지별 단어: ① flour(밀가루) ② tip(조언) ③ snack(간식) ④ chef(요리사) ⑤ breakfast(아침식사)
+
+17번에서 caprese skewers를 '간식(snack)'으로 즐긴다는 내용이 있으므로
+ⓑ = <strong>snack</strong>(③)일 가능성이 높습니다. 원본 지문을 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- Q17 서술형 -->
+  <div class="q-card subj" id="qc-17">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">17</span>
+        <span class="type-badge badge-fill">서술형</span>
+        <span class="warn-tag">⚠️ 지문 없음</span>
+      </div>
+      <div class="q-text">윗글의 내용과 일치하도록 다음 빈칸에 들어갈 적절한 말을 쓰시오.
+
+Bella is telling about caprese skewers.
+They are healthy and ______ in calories,
+so she enjoys them as a ______ snack.</div>
+    </div>
+    <div class="fill-area">
+      <input class="fill-input" id="fill-17" placeholder="빈칸 ①, ②를 순서대로 쓰세요">
+      <button class="confirm-btn" id="cb-17" onclick="showSubj('17')">확인 →</button>
+    </div>
+    <div class="q-result" id="result-17">
+      <div class="result-row"><span class="result-badge rb-check">📝 모범 답안 (추정)</span></div>
+      <div class="model-answer"><strong>low / after-school</strong>
+They are healthy and <strong>low</strong> in calories,
+so she enjoys them as a <strong>after-school</strong> snack.</div>
+      <div class="explanation">
+<div class="expl-label">💡 해설 (추정)</div>⚠️ 원본 지문이 없어 추정 답안입니다.
+• "healthy and ______ in calories" → <strong>low</strong> in calories (칼로리가 낮은) — low ↔ high
+• 두 번째 빈칸은 원본 지문에 따라 다를 수 있습니다. 반드시 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- ══ 18~21 독해 (Miguel) ══ -->
+  <div class="sec-label">[18~21] 다음 글을 읽고 물음에 답하시오.</div>
+
+  <div class="passage-block">
+    <div class="passage-label">📖 지문 — Miguel의 아사이볼 소개</div>
+    <div class="passage-text" id="p1821">Miguel: Hello, everyone. I'm Miguel from Brazil. I'm making an acai bowl right now.
+It's a thick acai berry smoothie in a bowl.
+You can add other healthy foods like nuts and bananas, and it'll taste really well.
+Acai berries are a superfood, and people all over the world enjoy them.</div>
+    <div class="tts-bar">
+      <button class="tts-btn" onclick="speak(this,document.getElementById('p1821').innerText,'en-US')">🔊 지문 듣기</button>
+      <button class="tts-stop" onclick="stopSpeak()">■ 정지</button>
+    </div>
+  </div>
+
+  <!-- Q18 -->
+  <div class="q-card" id="qc-18">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">18</span>
+        <span class="type-badge badge-mc">객관식</span>
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ~ⓔ 중 <strong>어법상 틀린</strong> 것은?
+<small style="color:var(--sub)">(지문 내 "taste really well" 부분이 ⓔ로 표시된 경우 기준)</small></div>
+    </div>
+    <div class="choices" id="ch-18">
+      <label class="choice-item" onclick="grade('q18',0)"><input type="radio" name="q18" value="0"><span class="choice-key">①</span><span class="choice-text">ⓐ</span></label>
+      <label class="choice-item" onclick="grade('q18',1)"><input type="radio" name="q18" value="1"><span class="choice-key">②</span><span class="choice-text">ⓑ</span></label>
+      <label class="choice-item" onclick="grade('q18',2)"><input type="radio" name="q18" value="2"><span class="choice-key">③</span><span class="choice-text">ⓒ</span></label>
+      <label class="choice-item" onclick="grade('q18',3)"><input type="radio" name="q18" value="3"><span class="choice-key">④</span><span class="choice-text">ⓓ</span></label>
+      <label class="choice-item" onclick="grade('q18',4)"><input type="radio" name="q18" value="4"><span class="choice-key">⑤</span><span class="choice-text">ⓔ</span></label>
+    </div>
+    <div class="q-result" id="result-18">
+      <div class="result-row">
+        <span class="result-badge" id="badge-18"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ⑤</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>어법상 틀린 표현: "taste really <strong>well</strong>" → "taste really <strong>good</strong>"
+
+taste는 <strong>연결동사(linking verb)</strong>로 뒤에 형용사 보어가 필요합니다.
+• well = 부사 (일반 동작 동사 수식) → ✗
+• good = 형용사 (연결동사의 보어) → ✓
+
+비교: smell good ✓ / look good ✓ / feel good ✓ / taste good ✓
+(이 부분이 ⓔ로 표시되어 있으면 정답: ⑤)</div>
+    </div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="q-card" id="qc-19">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">19</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <span class="warn-tag">⚠️ 빈칸 위치 불명확</span>
+        <button class="tts-btn" onclick="speak(this,'1: For. 2: With. 3: Like. 4: Unlike. 5: About.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">윗글의 빈칸 ⓔ에 들어갈 말로 가장 적절한 것은?</div>
+    </div>
+    <div class="choices" id="ch-19">
+      <label class="choice-item" onclick="grade('q19',0)"><input type="radio" name="q19" value="0"><span class="choice-key">①</span><span class="choice-text">For</span></label>
+      <label class="choice-item" onclick="grade('q19',1)"><input type="radio" name="q19" value="1"><span class="choice-key">②</span><span class="choice-text">With</span></label>
+      <label class="choice-item" onclick="grade('q19',2)"><input type="radio" name="q19" value="2"><span class="choice-key">③</span><span class="choice-text">Like</span></label>
+      <label class="choice-item" onclick="grade('q19',3)"><input type="radio" name="q19" value="3"><span class="choice-key">④</span><span class="choice-text">Unlike</span></label>
+      <label class="choice-item" onclick="grade('q19',4)"><input type="radio" name="q19" value="4"><span class="choice-key">⑤</span><span class="choice-text">About</span></label>
+    </div>
+    <div class="q-result" id="result-19">
+      <div class="result-row">
+        <span class="result-badge" id="badge-19"></span>
+        <span style="font-size:12px;color:#f59e0b">⚠️ 잠정 답안: ③</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설 (잠정)</div>⚠️ 원본 지문의 ⓔ 위치가 확인되지 않습니다.
+
+지문에서 "add other healthy foods ⓔ nuts and bananas"라면:
+③ <strong>Like</strong> (~와 같은, 예를 들어) → "like nuts and bananas" ✓
+
+각 전치사: ① For(~을 위해) ② With(~와 함께) ③ Like(~와 같은)
+④ Unlike(~와 달리) ⑤ About(~에 대해)
+원본 지문을 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- Q20 서술형 -->
+  <div class="q-card subj" id="qc-20">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">20</span>
+        <span class="type-badge badge-essay">서술형</span>
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓐ의 우리말에 맞도록 괄호 안의 단어를 바르게 배열하여 문장을 완성하시오.
+
+→ I ______ them.
+(my, bake, fry, but, don't, chips)</div>
+    </div>
+    <div class="fill-area">
+      <input class="fill-input" id="fill-20" placeholder="괄호 안 단어를 배열하여 빈칸을 채우세요">
+      <button class="confirm-btn" id="cb-20" onclick="showSubj('20')">확인 →</button>
+    </div>
+    <div class="q-result" id="result-20">
+      <div class="result-row"><span class="result-badge rb-check">📝 모범 답안</span></div>
+      <div class="model-answer"><strong>bake my chips but don't fry</strong>
+→ I <strong>bake my chips but don't fry</strong> them.</div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>"나는 그것들을 굽지만 튀기지 않는다."
+
+배열: I + <strong>bake</strong>(굽다) + <strong>my chips</strong>(나의 감자칩을) + <strong>but</strong>(하지만) + <strong>don't</strong>(~하지 않다) + <strong>fry</strong>(튀기다) + them
+
+→ I bake my chips but don't fry them.
+• bake(굽다) ↔ fry(튀기다): 대비를 "A but don't B" 구조로 표현</div>
+    </div>
+  </div>
+
+  <!-- Q21 -->
+  <div class="q-card" id="qc-21">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">21</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <span class="warn-tag">⚠️ 빈칸 위치 불명확</span>
+        <button class="tts-btn" onclick="speak(this,'1: use. 2: using. 3: don\'t use. 4: am using. 5: not using.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">윗글의 빈칸 ⓑ에 들어갈 말로 가장 적절한 것은?</div>
+    </div>
+    <div class="choices" id="ch-21">
+      <label class="choice-item" onclick="grade('q21',0)"><input type="radio" name="q21" value="0"><span class="choice-key">①</span><span class="choice-text">use</span></label>
+      <label class="choice-item" onclick="grade('q21',1)"><input type="radio" name="q21" value="1"><span class="choice-key">②</span><span class="choice-text">using</span></label>
+      <label class="choice-item" onclick="grade('q21',2)"><input type="radio" name="q21" value="2"><span class="choice-key">③</span><span class="choice-text">don't use</span></label>
+      <label class="choice-item" onclick="grade('q21',3)"><input type="radio" name="q21" value="3"><span class="choice-key">④</span><span class="choice-text">am using</span></label>
+      <label class="choice-item" onclick="grade('q21',4)"><input type="radio" name="q21" value="4"><span class="choice-key">⑤</span><span class="choice-text">not using</span></label>
+    </div>
+    <div class="q-result" id="result-21">
+      <div class="result-row">
+        <span class="result-badge" id="badge-21"></span>
+        <span style="font-size:12px;color:#f59e0b">⚠️ 잠정 답안: ②</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설 (잠정)</div>⚠️ 원본 지문의 ⓑ 위치가 확인되지 않습니다.
+
+선택지 분석:
+① use: 동사원형 ② using: 동명사/현재분사 ③ don't use: 부정 현재형
+④ am using: 현재진행형(I 주어) ⑤ not using: 부정 동명사/분사
+
+"by ⓑ ~"(~를 사용함으로써) 형태라면 ② <strong>using</strong>이 적절합니다.
+원본 지문을 확인하세요.</div>
+    </div>
+  </div>
+
+  <!-- ══ 22~25 독해 (Miguel 2nd) ══ -->
+  <div class="sec-label">[22~25] 다음 글을 읽고 물음에 답하시오.</div>
+
+  <div class="passage-block">
+    <div class="passage-label">📖 지문 — Miguel의 아사이볼 소개</div>
+    <div class="passage-text" id="p2225">Miguel: Hello, everyone. I'm Miguel from Brazil. I'm making an acai bowl right now.
+It's a thick acai berry smoothie in a bowl.
+You can add other healthy foods like nuts and bananas, and it'll taste really well.
+Acai berries are a superfood, and people all over the world enjoy them.</div>
+    <div class="tts-bar">
+      <button class="tts-btn" onclick="speak(this,document.getElementById('p2225').innerText,'en-US')">🔊 지문 듣기</button>
+      <button class="tts-stop" onclick="stopSpeak()">■ 정지</button>
+    </div>
+    <div class="passage-missing" style="margin-top:10px;">⚠️ 22번·23번 문제가 파일에 누락되어 있습니다.</div>
+  </div>
+
+  <!-- Q24 -->
+  <div class="q-card" id="qc-24">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">24</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <button class="tts-btn" onclick="speak(this,'What does C refer to? 1: nuts. 2: bananas. 3: smoothies. 4: acai berries. 5: healthy foods.','en-US')">🔊 듣기</button>
+      </div>
+      <div class="q-text">윗글의 밑줄 친 ⓒ가 가리키는 것으로 가장 적절한 것은?</div>
+    </div>
+    <div class="choices" id="ch-24">
+      <label class="choice-item" onclick="grade('q24',0)"><input type="radio" name="q24" value="0"><span class="choice-key">①</span><span class="choice-text">nuts</span></label>
+      <label class="choice-item" onclick="grade('q24',1)"><input type="radio" name="q24" value="1"><span class="choice-key">②</span><span class="choice-text">bananas</span></label>
+      <label class="choice-item" onclick="grade('q24',2)"><input type="radio" name="q24" value="2"><span class="choice-key">③</span><span class="choice-text">smoothies</span></label>
+      <label class="choice-item" onclick="grade('q24',3)"><input type="radio" name="q24" value="3"><span class="choice-key">④</span><span class="choice-text">acai berries</span></label>
+      <label class="choice-item" onclick="grade('q24',4)"><input type="radio" name="q24" value="4"><span class="choice-key">⑤</span><span class="choice-text">healthy foods</span></label>
+    </div>
+    <div class="q-result" id="result-24">
+      <div class="result-row">
+        <span class="result-badge" id="badge-24"></span>
+        <span style="font-size:12px;color:var(--sub)">정답: ④</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설</div>지문 마지막 문장:
+"Acai berries are a superfood, and people all over the world enjoy <strong>them</strong>."
+
+"them"(=ⓒ) → 바로 앞에 나온 복수 명사 <strong>"Acai berries"</strong>를 가리킵니다.
+
+① nuts ② bananas: 부가 식재료로 언급됨 (직전 명사가 아님)
+③ smoothies: 아사이볼의 형태를 설명하는 단어
+⑤ healthy foods: 범주를 나타내는 총칭</div>
+    </div>
+  </div>
+
+  <!-- Q25 -->
+  <div class="q-card" id="qc-25">
+    <div class="q-head">
+      <div class="q-num-row">
+        <span class="q-num">25</span>
+        <span class="type-badge badge-mc">객관식</span>
+        <span class="warn-tag">⚠️ 학생 발언 없음</span>
+      </div>
+      <div class="q-text">윗글의 내용을 <strong>바르게 이해한</strong> 사람끼리 짝지어진 것은?</div>
+    </div>
+    <div class="choices" id="ch-25">
+      <label class="choice-item" onclick="grade('q25',0)"><input type="radio" name="q25" value="0"><span class="choice-key">①</span><span class="choice-text">하준, 민서</span></label>
+      <label class="choice-item" onclick="grade('q25',1)"><input type="radio" name="q25" value="1"><span class="choice-key">②</span><span class="choice-text">하준, 지호</span></label>
+      <label class="choice-item" onclick="grade('q25',2)"><input type="radio" name="q25" value="2"><span class="choice-key">③</span><span class="choice-text">하준, 서현</span></label>
+      <label class="choice-item" onclick="grade('q25',3)"><input type="radio" name="q25" value="3"><span class="choice-key">④</span><span class="choice-text">민서, 지호</span></label>
+      <label class="choice-item" onclick="grade('q25',4)"><input type="radio" name="q25" value="4"><span class="choice-key">⑤</span><span class="choice-text">민서, 서현</span></label>
+    </div>
+    <div class="q-result" id="result-25">
+      <div class="result-row">
+        <span class="result-badge" id="badge-25"></span>
+        <span style="font-size:12px;color:#f59e0b">⚠️ 잠정 답안: ②</span>
+      </div>
+      <div class="explanation">
+<div class="expl-label">💡 해설 (잠정)</div>⚠️ 원본 지문에 각 학생의 발언이 있어야 하는데 파일에 포함되지 않았습니다.
+원본 시험지를 확인하세요.
+
+Miguel 지문 핵심 내용 (정오 판단 기준):
+• Miguel은 <strong>브라질</strong> 출신
+• 지금 아사이볼을 <strong>만들고 있는 중</strong> (현재진행형)
+• 아사이볼 = 두꺼운 아사이베리 스무디 + 견과류·바나나 <strong>추가 가능</strong>
+• 아사이베리는 <strong>슈퍼푸드</strong>
+• "taste really well" → 어법상 틀린 표현 (taste really good이 맞음)</div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<!-- BOTTOM BAR -->
+<div class="bottom-bar">
+  <div class="bottom-info">
+    객관식 정답: <strong id="correctCount">0</strong> / <strong id="totalCount">16</strong>
+    &nbsp;·&nbsp; 남은 문제: <strong id="remainCount">16</strong>
+  </div>
+  <div class="live-score" id="liveScoreBar" style="font-size:12px;padding:5px 12px;">
+    <span id="barFrac">0 / 16</span>
+  </div>
+</div>
+
+<script>
+// ══ ANSWER KEY ══
+const MC = {
+  q01:0, q03:3, q04:2, q05:1, q07:1, q08:4,
+  q09:2, q10:2, q11:1, q15:3, q16:2,
+  q18:4, q19:2, q21:1, q24:3, q25:1
+};
+const PROVISIONAL = new Set(['q15','q16','q19','q21','q25']);
+const MC_TOTAL = Object.keys(MC).length;
+let mcCorrect = 0, mcAnswered = 0;
+const resultLog = {}; // name → true/false
+
+// ══ TTS ══
+function speak(btn, text, lang) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  document.querySelectorAll('.tts-btn.speaking').forEach(b => { b.classList.remove('speaking'); b.dataset.speaking = '0'; });
+  if (btn.dataset.speaking === '1') { btn.dataset.speaking = '0'; return; }
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang || 'ko-KR';
+  u.rate = lang === 'en-US' ? 0.85 : 0.9;
+  const vv = window.speechSynthesis.getVoices();
+  const pfx = lang === 'en-US' ? 'en' : 'ko';
+  const v = vv.find(x => x.lang.startsWith(pfx) && x.localService) || vv.find(x => x.lang.startsWith(pfx));
+  if (v) u.voice = v;
+  btn.classList.add('speaking'); btn.dataset.speaking = '1';
+  u.onend = u.onerror = () => { btn.classList.remove('speaking'); btn.dataset.speaking = '0'; };
+  window.speechSynthesis.speak(u);
+}
+function stopSpeak() {
+  window.speechSynthesis && window.speechSynthesis.cancel();
+  document.querySelectorAll('.tts-btn.speaking').forEach(b => { b.classList.remove('speaking'); b.dataset.speaking = '0'; });
+}
+window.speechSynthesis && window.speechSynthesis.getVoices();
+
+// ══ GRADE MC ══
+function grade(name, selected) {
+  if (!MC.hasOwnProperty(name)) return;
+  const num = name.replace('q', '');
+  const ch = document.getElementById('ch-' + num);
+  if (!ch || ch.classList.contains('locked')) return; // already answered
+
+  const ans = MC[name];
+  const prov = PROVISIONAL.has(name);
+  const isOk = selected === ans;
+
+  // lock all choices
+  ch.classList.add('locked');
+  ch.querySelectorAll('.choice-item').forEach((item, i) => {
+    item.classList.add('locked-item');
+    item.style.cursor = 'default';
+    item.querySelector('input').disabled = true;
+    if (i === ans) item.classList.add('c-ok');
+  });
+  if (!isOk) {
+    ch.querySelectorAll('.choice-item')[selected]?.classList.add('c-ng');
+  }
+
+  // card border
+  const card = document.getElementById('qc-' + num);
+  card.classList.add(isOk ? 'correct' : 'wrong');
+
+  // badge
+  const badge = document.getElementById('badge-' + num);
+  if (badge) {
+    if (isOk) {
+      badge.className = 'result-badge rb-ok';
+      badge.textContent = prov ? '✅ 정답 (잠정 기준)' : '✅ 정답!';
+    } else {
+      badge.className = 'result-badge rb-ng';
+      const labels = ['①','②','③','④','⑤'];
+      badge.textContent = (prov ? '❌ 오답 (잠정)' : '❌ 오답') + ' · 정답: ' + labels[ans];
+    }
+  }
+
+  // show result
+  const result = document.getElementById('result-' + num);
+  if (result) result.classList.add('show');
+
+  // score
+  mcAnswered++;
+  if (isOk) mcCorrect++;
+  resultLog[name] = isOk;
+  updateScore();
+
+  // scroll result into view gently
+  setTimeout(() => result?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+
+  if (mcAnswered === MC_TOTAL) showFinalScore();
+}
+
+// ══ SUBJECTIVE CONFIRM ══
+function showSubj(num) {
+  const inp = document.getElementById('fill-' + num);
+  const btn = document.getElementById('cb-' + num);
+  const result = document.getElementById('result-' + num);
+  const card = document.getElementById('qc-' + num);
+  if (inp) inp.disabled = true;
+  if (btn) { btn.disabled = true; btn.textContent = '확인 완료 ✓'; }
+  if (result) result.classList.add('show');
+  if (card) card.classList.add('done');
+  setTimeout(() => result?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+}
+
+// ══ SCORE UPDATE ══
+function updateScore() {
+  document.getElementById('correctCount').textContent = mcCorrect;
+  document.getElementById('remainCount').textContent = MC_TOTAL - mcAnswered;
+  document.getElementById('barFrac').textContent = mcCorrect + ' / ' + mcAnswered;
+
+  // update header pill
+  const pill = document.getElementById('liveScore');
+  if (pill) pill.querySelector('#scoreFrac').textContent = mcCorrect + ' / ' + MC_TOTAL;
+}
+
+// ══ FINAL SCORE ══
+function showFinalScore() {
+  const pct = Math.round(mcCorrect / MC_TOTAL * 100);
+  const msg = pct >= 90 ? '🏆 훌륭해요! 거의 완벽합니다!'
+            : pct >= 70 ? '😊 잘했어요! 틀린 문제 해설을 다시 읽어보세요.'
+            : pct >= 50 ? '📖 절반 이상 맞혔어요. 해설로 개념을 정리하세요.'
+            : '💪 다시 도전해봐요! 해설을 꼼꼼히 읽으며 기초를 다져보세요.';
+  document.getElementById('scoreNum').textContent = mcCorrect + ' / ' + MC_TOTAL;
+  document.getElementById('scoreLabel').textContent = '객관식 ' + MC_TOTAL + '문제 중 ' + mcCorrect + '문제 정답 (' + pct + '%)';
+  document.getElementById('scoreMsg').textContent = msg;
+
+  // dot bar
+  const bars = document.getElementById('scoreBars');
+  const names = Object.keys(MC);
+  bars.innerHTML = names.map(n => {
+    const cls = resultLog[n] === true ? 'ok' : resultLog[n] === false ? 'ng' : '';
+    return '<div class="s-dot ' + cls + '" title="' + n.replace('q','') + '번"></div>';
+  }).join('');
+
+  const fs = document.getElementById('finalScore');
+  fs.classList.add('show');
+  fs.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+</script>
+</body>
+</html>
